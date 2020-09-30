@@ -4,24 +4,36 @@
 
 [template public generate(aNTNU : NTNU)]
 [comment @main/]
-[file ('index.html', false, 'UTF-8')]
-<html>
-<head>
-	<title>['heihei'/]</title>
-	<meta charset="utf-8"/>
-</head>
-<body>
-	[for (programme : Programme | programmes)]
-			[generate(programme)/]
-	[/for]
+[for (programme : Programme | programmes)]
+	[file (programme.name.concat('.html'), false, 'UTF-8')]
+	<html>
+	<head>
+		<title>['heihei'/]</title>
+		<meta charset="utf-8"/>
+	</head>
+	<body>
+		[generate(programme)/]
+		[for(spec : Specialisation | specialisations)]
+			[generateSpec(spec)/]
+		[/for]
 
-<script type="text/javascript">
-</script>
-</body></html>
 
-[/file]
+		<h3>Studieplan</h3>
+
+		<script type="text/javascript">
+		</script>
+	</body></html>	
+
+	[/file]
+[/for]
+
+
 [/template]
 
 [template public generate(programme : Programme)]
 		<hr/><h2>[programme.name/]</h2>
+[/template]
+
+[template public generateSpec(specialisation : Specialisation)]
+		<hr/><h4>[specialisation.name/]</h4>
 [/template]
