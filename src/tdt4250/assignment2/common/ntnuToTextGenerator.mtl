@@ -1,0 +1,27 @@
+[comment encoding = UTF-8 /]
+[module ntnuToTextGenerator('platform:/plugin/tdt4250.program_web_page.model/model/program_web_page.ecore')]
+
+
+[template public generate(aNTNU : NTNU)]
+[comment @main/]
+[file ('index.html', false, 'UTF-8')]
+<html>
+<head>
+	<title>['heihei'/]</title>
+	<meta charset="utf-8"/>
+</head>
+<body>
+	[for (programme : Programme | programmes)]
+			[generate(programme)/]
+	[/for]
+
+<script type="text/javascript">
+</script>
+</body></html>
+
+[/file]
+[/template]
+
+[template public generate(programme : Programme)]
+		<hr/><h2>[programme.name/]</h2>
+[/template]
