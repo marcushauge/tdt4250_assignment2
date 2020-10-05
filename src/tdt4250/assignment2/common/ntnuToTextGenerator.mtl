@@ -10,15 +10,26 @@
 	<head>
 		<title>['heihei'/]</title>
 		<meta charset="utf-8"/>
+		<style>
+			table, th, td {
+ 		 	border: 1px solid black;
+			}
+		</style>
 	</head>
 	<body>
 		[generate(programme)/]
+		<h2>Spesialiseringer</h2>
 		[for(spec : Specialisation | specialisations)]
 			[generateSpec(spec)/]
 		[/for]
+		<hr/>
 
-
-		<h3>Studieplan</h3>
+		<br></br>
+		<h2>Studieplan</h2>
+		[for(spec : Specialisation | specialisations)]
+			[generatePlan(spec)/]
+			<hr/><br>
+		[/for]
 
 		<script type="text/javascript">
 		</script>
@@ -31,9 +42,53 @@
 [/template]
 
 [template public generate(programme : Programme)]
-		<hr/><h2>[programme.name/]</h2>
+		<h1>[programme.name/]</h1>
+		<br></br>
 [/template]
 
 [template public generateSpec(specialisation : Specialisation)]
 		<hr/><h4>[specialisation.name/]</h4>
+		Some info about specialisation..asdasdd asdasd
 [/template]
+
+[template public generatePlan(specialisation : Specialisation)]
+		<h3>[specialisation.name/]</h3>
+		[for(sem : Semester | specialisation.semesters)]
+			[if (sem.semseterNumb.mod(2)<>0)]
+				<br><h3>[(sem.semseterNumb+1)/2/]. Ar -------------------------------------------------</h3>
+				<h3>HOST</h3>
+				[generateCourses(sem)/]
+
+			[/if]
+			[if (sem.semseterNumb.mod(2)=0)]
+				<h3>VAR</h3>
+				[generateCourses(sem)/]
+			[/if]
+			Semester number: [sem.semseterNumb/]
+			<br>
+		[/for]
+[/template]
+
+[template public generateCourses(semester : Semester)]
+		<table>
+		<tr>
+		    <th>Kode</th>
+		    <th>Navn</th>
+			<th>Sp</th>
+			<th>Status</th>
+		 </tr>
+		[for(group : CourseGroup | semester.courseGroups)]
+			[for(course : Course | group.courses)]
+				<tr>
+					<td>[course.courseCode/]</td>
+					<td>[course.name/]</td>
+					<td>[course.credits/]</td>
+					<td>[group.mandatoryLevel/]</td>
+				</tr>
+			[/for]
+		[/for]
+		</table>
+[/template]
+
+
+
